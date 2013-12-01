@@ -17,19 +17,19 @@
         android:textSize="22sp" />
 
     <TextView
-       	android:layout_width="wrap_content"
-       	android:layout_height="wrap_content"
-       	android:layout_marginTop="75dp"
-       	android:gravity="center"
-       	android:text="@string/plus_tutorial"
-       	android:textAlignment="center"
-       	android:textSize="15sp" />
-
-    	
-    <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:gravity="center"
+        android:text="@string/plus_tutorial"
+        android:textAlignment="center"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="244dp"
+        android:layout_height="0dip"
         android:layout_marginTop="90dp"
+        android:layout_weight="0.27"
         android:gravity="center"
         android:text="@string/settings_tutorial"
         android:textAlignment="center"

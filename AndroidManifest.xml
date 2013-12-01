@@ -47,10 +47,6 @@
             android:label="@string/title_activity_reports" >
         </activity>
         <activity
-            android:name="com.iswarya.myexpensemanager.ExportAppDataActivity"
-            android:label="@string/title_activity_export_app_data_activity" >
-        </activity>
-        <activity
             android:name="com.iswarya.myexpensemanager.ShowExpenseActivity"
             android:label="@string/title_activity_show_expense" >
         </activity>

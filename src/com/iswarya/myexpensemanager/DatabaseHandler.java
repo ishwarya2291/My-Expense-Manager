@@ -96,9 +96,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Expense expense = new Expense(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
-    	
-//        expense.setId(Integer.valueOf(cursor.getString(cursor.getColumnIndex(KEY_ID))));
-    	
+    	    	
         if(cursor != null && !cursor.isClosed()){
             cursor.close();
         }
@@ -138,13 +136,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         	
             cursor.close();
         }
-        
-     
-           
-    //    cursor.close();
         // return contact list
         return expenseList;
-    	
     }
      
     // Getting expenses Count

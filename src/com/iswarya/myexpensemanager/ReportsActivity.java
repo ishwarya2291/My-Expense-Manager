@@ -36,8 +36,8 @@ public class ReportsActivity extends Activity{
 			startActivity(recordExpensesIntent);
 			return true;
 		case R.id.action_export_app_data:
-			Intent exportAppDataIntent = new Intent(ReportsActivity.this, ExportAppDataActivity.class);
-			startActivity(exportAppDataIntent);
+			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
+			task.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(ReportsActivity.this, MyExpenseManagerMainActivity.class);

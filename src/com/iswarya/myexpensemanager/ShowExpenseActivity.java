@@ -113,8 +113,8 @@ public class ShowExpenseActivity extends Activity {
 			startActivity(reportsIntent);
 			return true;
 		case R.id.action_export_app_data:
-			Intent exportAppDataIntent = new Intent(ShowExpenseActivity.this, ExportAppDataActivity.class);
-			startActivity(exportAppDataIntent);
+			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
+			task.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(ShowExpenseActivity.this, MyExpenseManagerMainActivity.class);
