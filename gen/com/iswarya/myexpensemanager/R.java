@@ -165,7 +165,7 @@ public final class R {
         public static final int take_photo_image=0x7f060012;
         public static final int title_activity_all_expenses=0x7f060013;
         public static final int title_activity_edit_expense=0x7f060007;
-        public static final int title_activity_export_app_data_acctivity=0x7f060026;
+        public static final int title_activity_export_app_data_activity=0x7f060026;
         public static final int title_activity_image=0x7f060035;
         public static final int title_activity_reports=0x7f06001e;
         public static final int title_activity_show_expense=0x7f060028;

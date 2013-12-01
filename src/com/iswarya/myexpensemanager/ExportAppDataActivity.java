@@ -8,13 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class ExportAppDataActivity extends Activity implements OnClickListener{
+public class ExportAppDataActivity extends Activity{
 
 	private Button mCreateBackupButton;
 	private Button mCancelButton;
 	SessionManager session;
+	ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,20 @@ public class ExportAppDataActivity extends Activity implements OnClickListener{
 	
 		
 		mCreateBackupButton = (Button) findViewById(R.id.create_backup_button);
-		mCreateBackupButton.setOnClickListener(this);
+		mCreateBackupButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				try {
+					task.execute("");
+				//	Toast.makeText(getBaseContext(), "Export successful!", Toast.LENGTH_SHORT).show();
+				} catch (Exception e) {
+					System.out.println("Error in Export App Data Activity");
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		
 		mCancelButton = (Button) findViewById(R.id.cancel_button);
 		mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +85,6 @@ public class ExportAppDataActivity extends Activity implements OnClickListener{
 			
 		}
 	}
-	
-
-
 }
+
+

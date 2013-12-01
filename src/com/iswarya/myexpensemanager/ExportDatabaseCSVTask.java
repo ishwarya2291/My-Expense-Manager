@@ -6,27 +6,33 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
-public class ExportDatabaseFile extends AsyncTask<String, Void, Boolean> {
-    private final ProgressDialog dialog = new ProgressDialog(ctx);
+public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>{
+//	private final ProgressDialog dialog = new ProgressDialog(ctx);
 
+	private Context mContext;
+
+    public ExportDatabaseCSVTask(Context context) {
+        mContext = context;
+    } 
+	
+	
     // can use UI thread here
     protected void onPreExecute() {
-       this.dialog.setMessage("Exporting database...");
-       this.dialog.show();
+//       this.dialog.setMessage("Exporting database...");
+//       this.dialog.show();
     }
 
     // automatically done on worker thread (separate from UI thread)
     protected Boolean doInBackground(final String... args) {
 
-       File dbFile =
-                new File(Environment.getDataDirectory() + "/data/com.mypkg/databases/mydbfile.db");
-
+//       File dbFile = new File(Environment.getDataDirectory() + "/com.iswarya.myexpensemanager/databases/expenseManagerDatabase.db");
+    	 File dbFile = new File(mContext.getDatabasePath(DatabaseHandler.DATABASE_NAME).toString());
+       
        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
        if (!exportDir.exists()) {
           exportDir.mkdirs();
@@ -45,14 +51,16 @@ public class ExportDatabaseFile extends AsyncTask<String, Void, Boolean> {
 
     // can use UI thread here
     protected void onPostExecute(final Boolean success) {
-       if (this.dialog.isShowing()) {
-          this.dialog.dismiss();
-       }
-       if (success) {
-          Toast.makeText(ctx, "Export successful!", Toast.LENGTH_SHORT).show();
-       } else {
-          Toast.makeText(ctx, "Export failed", Toast.LENGTH_SHORT).show();
-       }
+    	System.out.println("Success");
+    	
+//       if (this.dialog.isShowing()) {
+//          this.dialog.dismiss();
+//       }
+//       if (success) {
+//          Toast.makeText(ctx, "Export successful!", Toast.LENGTH_SHORT).show();
+//       } else {
+//          Toast.makeText(ctx, "Export failed", Toast.LENGTH_SHORT).show();
+//       }
     }
 
     void copyFile(File src, File dst) throws IOException {
@@ -66,6 +74,5 @@ public class ExportDatabaseFile extends AsyncTask<String, Void, Boolean> {
           if (outChannel != null)
              outChannel.close();
        }
-    }
-
- }
+    }	
+}
