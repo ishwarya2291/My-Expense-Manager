@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My Expense Manager</string>
+    <string name="action_settings">Settings</string>
+    <string name="full_name_hint">Enter your full name</string>
+    <string name="email_address_hint">Enter your email address</string>
+    <string name="continue_button_text">Continue</string>
+    <string name="update_button_text">Update</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="title_activity_edit_expense">EditExpenseActivity</string>
+    <string name="$_text">$</string>
+    <string name="date_text">Date:</string>
+    <string name="note_text">Note:</string>
+    <string name="account_type">Account:</string>
+    <string name="category_name">Category:</string>
+    <string name="payment_type">Payment:</string>
+    <string name="receipt_text">Receipt:</string>
+    <string name="save_button_text">Save</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="gallery_image">Gallery</string>
+    <string name="take_photo_image">Take Photo</string>
+    <string name="title_activity_all_expenses">AllExpensesActivity</string>
+    <string name="current_month">October</string>
+    <string name="total_amount_month">300.00</string>
+    <string name="item_shopping">Shopping</string>
+    <string name="item_date">10/3/2013</string>
+    <string name="item_amount">$75.00</string>
+    <string name="arrow">></string>
+    <string name="title_activity_startup">StartupActivity</string>
+    <string name="hello_name">Hello Iswarya!</string>
+    <string name="plus_tutorial">Tap on \'+\' to record an expense</string>
+    <string name="settings_tutorial">Tap on \'Settings Menu\' to access reports and export data</string>
+    <string name="title_activity_reports">ReportsActivity</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_add">Add</string>
+    <string name="action_record_expenses">Record Expenses</string>
+    <string name="action_reports">Reports</string>
+    <string name="action_export_app_data">Export App Data</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_logout">Logout</string>
+    <string name="title_activity_export_app_data_activity">ExportAppDataActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_show_expense">ShowExpenseActivity</string>
+    <string name="delete_button_text">Delete</string>
+    <string name="reports_by_account">Spending by Account</string>
+    <string name="reports_by_category">Spending by Category</string>
+    <string name="reports_by_payment_method">Spending by Payment Method</string>
+    <string name="all_records">All Records</string>
+    <string name="selected_account">Selected Account:</string>
+    <string name="selected_category">Selected Category:</string>
+    <string name="selected_payment_method">Selected Payment Method:</string>
+    <string name="create_backup_button_text">Create Backup</string>
+    <string name="accounts_prompt">Choose an account</string>
+
+    <string-array name="accounts_array">
+        <item>Business</item>
+        <item>Family</item>
+        <item>Friends</item>
+        <item>Home</item>
+        <item>Kids</item>
+        <item>Personal</item>
+        <item>Work</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
+    <string name="category_prompt">Choose a category</string>
+
+    <string-array name="categories_array">
+        <item>Airfare</item>
+        <item>Bus</item>
+        <item>Car</item>
+        <item>Entertainment</item>
+        <item>Food</item>
+        <item>Fuel</item>
+        <item>Groceries</item>
+        <item>Hotel</item>
+        <item>Laundry</item>
+        <item>Medical</item>
+        <item>Mobile</item>
+        <item>Train</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
+    <string name="payment_method_prompt">Choose a payment method</string>
+
+    <string-array name="payment_methods_array">
+        <item>Credit Card</item>
+        <item>Debit Card</item>
+        <item>Cash</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
+    <string name="title_activity_image">ImageActivity</string>
+
+</resources>
