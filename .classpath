@@ -6,6 +6,7 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="/android-support-v7-appcompat"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Iswarya/Desktop/opencsv-2.3-src-with-libs/opencsv-2.3/deploy/opencsv-2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Iswarya/Desktop/Semester III/Software Design Handheld Devices/achartengine-1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Iswarya/Desktop/Semester III/Software Design Handheld Devices/opencsv-2.3-src-with-libs/opencsv-2.3/deploy/opencsv-2.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

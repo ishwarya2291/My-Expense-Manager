@@ -7,19 +7,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 public class ImageActivity extends Activity {
 
 	private static ImageView mDisplayReceipt;
 	private String imgPath;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
-		mDisplayReceipt = (ImageView) findViewById(R.id.display_receipt);
+		mDisplayReceipt = (TouchImageView) findViewById(R.id.display_receipt);
+		
 		
 		Intent intent = getIntent();
         imgPath = intent.getStringExtra("imgPath");
@@ -29,8 +30,7 @@ public class ImageActivity extends Activity {
         {
         	mDisplayReceipt.setImageURI(Uri.fromFile(imgFile));
 
-        }
-		
+        }      
 	}
 
 	@Override

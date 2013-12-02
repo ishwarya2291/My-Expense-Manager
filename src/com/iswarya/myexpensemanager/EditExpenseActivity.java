@@ -401,7 +401,8 @@ public class EditExpenseActivity extends Activity {
 			session.logoutUser();
 			return true;
 		case R.id.action_exit:
-			finish();
+			moveTaskToBack(true); 
+		    this.finish();
 			return true;
 		case android.R.id.home:
 			finish();

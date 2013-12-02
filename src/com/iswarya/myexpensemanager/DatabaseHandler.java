@@ -152,8 +152,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         return count;
     }
-    
-    
+      
     // Updating single expense
     public int updateExpense(Expense expense, int id){
     	SQLiteDatabase db = this.getWritableDatabase();
@@ -171,8 +170,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	
     	// updating row
         return db.update(TABLE_EXPENSE_DETAILS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(id)});
-        
+                new String[] { String.valueOf(id)});   
     }
      
     // Deleting single expense
@@ -181,8 +179,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_EXPENSE_DETAILS, KEY_ID + " = ?",
                 new String[] { String.valueOf(expense.getId()) });
         db.close();	
-    }
+    }    
 }
-
-
-

@@ -1,13 +1,14 @@
 package com.iswarya.myexpensemanager;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,8 +18,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-
-
 
 public class MyExpenseManagerMainActivity extends Activity {
 
@@ -32,7 +31,6 @@ public class MyExpenseManagerMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_expense_manager_main);
 		setupUI(findViewById(R.id.parent));
-
 		
 		// Session Manager
         session = new SessionManager(getApplicationContext());
@@ -105,10 +103,11 @@ public class MyExpenseManagerMainActivity extends Activity {
                         // For testing i am storing name, email as follow
                         // Use user real data
                         session.createLoginSession(fullName, emailAddress);
-                         
+            			
                         // Staring StartupActivity
                         Intent i = new Intent(getApplicationContext(), StartupActivity.class);
                         startActivity(i);
+                        
                      //   finish();
                          
                     }else{
@@ -133,13 +132,32 @@ public class MyExpenseManagerMainActivity extends Activity {
 		});
 	}
 	
+	@Override
+	protected void onResume() {
+		// get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+         
+        // name
+        String name = user.get(SessionManager.KEY_NAME);
+        // email
+        String email = user.get(SessionManager.KEY_EMAIL);
+		
+        if(mFullName.getText().toString().equals(name)){
+        	if(mEmailAddress.getText().toString().equals(email)){
+        		Intent i = new Intent (MyExpenseManagerMainActivity.this, AllExpensesActivity.class);
+        		startActivity(i);
+        	}
+        	
+        }
+        
+		super.onResume();
+	}
+	
 	public void Is_Valid_Person_Name(EditText edt) throws NumberFormatException {
 		if (edt.getText().toString().length() <= 0) {
 			edt.setError("Accept Alphabets Only.");
-		//	valid_name = null;
 		} else if (!edt.getText().toString().matches("[a-zA-Z ]+")) {
 			edt.setError("Accept Alphabets Only.");
-	//		valid_name = null;
 		}
 
 	}
@@ -147,12 +165,9 @@ public class MyExpenseManagerMainActivity extends Activity {
 	public void Is_Valid_Email(EditText edt) {
 		if (edt.getText().toString() == null) {
 			edt.setError("Invalid Email Address");
-	//		valid_email = null;
 		} else if (isEmailValid(edt.getText().toString()) == false) {
 			edt.setError("Invalid Email Address");
-	//		valid_email = null;
 		} else {
-	//		valid_email = edt.getText().toString();
 		}
 	}
 
@@ -171,7 +186,8 @@ public class MyExpenseManagerMainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
 		case R.id.action_exit:
-			finish();
+			moveTaskToBack(true); 
+		    this.finish();
 			return true;
 		default: 
 			return super.onOptionsItemSelected(item);

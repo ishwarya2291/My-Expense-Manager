@@ -191,7 +191,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:text="@string/cancel_button_text" />
-
         
     </RelativeLayout>
      

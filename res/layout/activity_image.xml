@@ -5,7 +5,7 @@
     android:background="@color/grey"
     tools:context=".ImageActivity" >
 
-    <ImageView
+    <com.iswarya.myexpensemanager.TouchImageView
         android:id="@+id/display_receipt"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -13,5 +13,5 @@
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
         android:contentDescription="image" />
-
+    
 </RelativeLayout>

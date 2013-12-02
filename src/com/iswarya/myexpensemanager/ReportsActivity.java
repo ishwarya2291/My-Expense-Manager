@@ -14,7 +14,7 @@ import android.widget.Button;
 public class ReportsActivity extends Activity{
 
 	SessionManager session;
-	private static Button mReportAccountButton, mReportCategoryButton, mReportPaymentMethodButton;
+	public static Button mReportAccountButton, mReportCategoryButton, mReportPaymentMethodButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +111,8 @@ public class ReportsActivity extends Activity{
 			session.logoutUser();
 			return true;
 		case R.id.action_exit:
-			finish();
+			moveTaskToBack(true); 
+		    this.finish();
 			return true;
 		case android.R.id.home:
 			finish();

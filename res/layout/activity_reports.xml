@@ -9,29 +9,48 @@
     tools:context=".ReportsActivity"
     android:orientation="vertical" >
     
-	<Button
-	    android:id="@+id/reports_account"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@string/reports_by_account" />
+    <LinearLayout
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+    	
+        <Button
+            android:id="@+id/reports_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reports_by_account" />
 
-	<Button
-	    android:id="@+id/reports_category"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@string/reports_by_category" />
-	
-	<Button
-	    android:id="@+id/reports_payment_method"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@string/reports_by_payment_method" />
-	
-	<LinearLayout
-        android:id="@+id/pie_chart_fragment"
-        android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-    	android:orientation="horizontal" >    	
+		<Button
+		    android:id="@+id/reports_category"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="@string/reports_by_category" />
+		
+		<Button
+		    android:id="@+id/reports_payment_method"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="@string/reports_by_payment_method" />
+    
     </LinearLayout>
+	
+	<FrameLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/border"
+	    android:padding="1dp">
+
+	    <LinearLayout
+	        android:id="@+id/pie_chart_fragment"
+	        android:layout_width="fill_parent"
+	    	android:layout_height="fill_parent"
+	    	android:orientation="horizontal" >    	
+	    </LinearLayout>
+
+	</FrameLayout>
+	
 
 </LinearLayout>

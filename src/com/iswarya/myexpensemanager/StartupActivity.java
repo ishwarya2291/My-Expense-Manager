@@ -36,7 +36,7 @@ public class StartupActivity extends Activity {
         // email
         String email = user.get(SessionManager.KEY_EMAIL);
 		
-		
+		System.out.println(user.toString());
 		
 	}
 
@@ -74,7 +74,8 @@ public class StartupActivity extends Activity {
 			session.logoutUser();
 			return true;
 		case R.id.action_exit:
-			finish();
+			moveTaskToBack(true); 
+		    this.finish();
 			return true;
 		case android.R.id.home:
 			finish();
