@@ -6,6 +6,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -38,6 +40,51 @@ public class MyExpenseManagerMainActivity extends Activity {
 		mFullName = (EditText) findViewById(R.id.full_name);
 		mEmailAddress = (EditText) findViewById(R.id.email_address);
 		mContinueButton = (Button) findViewById(R.id.continue_button_text);
+		
+		
+//		mFullName.addTextChangedListener(new TextWatcher() {
+//
+//			@Override
+//			public void onTextChanged(CharSequence s, int start, int before,
+//					int count) {
+//				// TODO Auto-generated method stub
+//			}
+//			@Override
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//				// TODO Auto-generated method stub
+//			}
+//			@Override
+//			public void afterTextChanged(Editable s) {
+//				// TODO Auto-generated method stub
+//				Is_Valid_Person_Name(mFullName); // pass your EditText Obj here.
+//			}
+//		});
+//		
+//		mEmailAddress.addTextChangedListener(new TextWatcher() {
+//
+//			@Override
+//			public void onTextChanged(CharSequence s, int start, int before,
+//					int count) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void afterTextChanged(Editable s) {
+//				// TODO Auto-generated method stub
+//				Is_Valid_Email(mEmailAddress);  // pass your EditText Obj here.
+//			}
+//		});
+		
+
 		
 		mContinueButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -85,6 +132,33 @@ public class MyExpenseManagerMainActivity extends Activity {
 			}
 		});
 	}
+	
+	public void Is_Valid_Person_Name(EditText edt) throws NumberFormatException {
+		if (edt.getText().toString().length() <= 0) {
+			edt.setError("Accept Alphabets Only.");
+		//	valid_name = null;
+		} else if (!edt.getText().toString().matches("[a-zA-Z ]+")) {
+			edt.setError("Accept Alphabets Only.");
+	//		valid_name = null;
+		}
+
+	}
+	
+	public void Is_Valid_Email(EditText edt) {
+		if (edt.getText().toString() == null) {
+			edt.setError("Invalid Email Address");
+	//		valid_email = null;
+		} else if (isEmailValid(edt.getText().toString()) == false) {
+			edt.setError("Invalid Email Address");
+	//		valid_email = null;
+		} else {
+	//		valid_email = edt.getText().toString();
+		}
+	}
+
+	boolean isEmailValid(CharSequence email) {
+		return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+	} // end of email matcher
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

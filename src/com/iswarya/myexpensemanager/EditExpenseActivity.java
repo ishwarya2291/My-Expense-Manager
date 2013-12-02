@@ -5,8 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,7 +41,11 @@ public class EditExpenseActivity extends Activity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	private Uri fileUri;
-	DatabaseHandler db = new DatabaseHandler(this);
+	DatabaseHandler db;
+	private Pattern pattern;
+	private Matcher matcher, matcher1;
+	private static final String DATE_PATTERN = 
+	          "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\d\\d)";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class EditExpenseActivity extends Activity {
 		// Session Manager
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
+        db = new DatabaseHandler(this);
 		
 		mSaveButton = (Button) findViewById(R.id.save_button);
 		mCancelButton = (Button) findViewById(R.id.cancel_button);
@@ -60,6 +69,21 @@ public class EditExpenseActivity extends Activity {
 		mAccountType = (Spinner) findViewById(R.id.account_type_spinner);
 		mCategoryType = (Spinner) findViewById(R.id.category_type_spinner);
 		mPaymentMethod = (Spinner) findViewById(R.id.payment_method_spinner);
+		
+//		mDate.setOnFocusChangeListener(new OnFocusChangeListener() {
+//			
+//			@Override
+//			public void onFocusChange(View v, boolean hasFocus) {
+//				// TODO Auto-generated method stub
+//				if(!hasFocus){
+//					matcher = Pattern.compile(DATE_PATTERN).matcher(mDate.getText().toString());
+//					validate(mDate.getText().toString());
+//					
+//				}
+//				
+//			}
+//		});
+				
 		
 		
 		Intent intent = getIntent();
@@ -180,20 +204,29 @@ public class EditExpenseActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				System.out.println("Inserting expense data.....");
-				if(imagePath.equals("")){
-					imagePath = "No Receipt";
-					 System.out.println(imagePath);
-				}
-				db.addExpense(new Expense(mAmountInDollars.getText().toString(),
-											mDate.getText().toString(),
-											mNotes.getText().toString(), 
-											mAccountType.getSelectedItem().toString(),
-											mCategoryType.getSelectedItem().toString(),
-											mPaymentMethod.getSelectedItem().toString(),
-											imagePath ));
-				Intent i = new Intent(EditExpenseActivity.this, AllExpensesActivity.class);
-				startActivity(i);
+				if(mAmountInDollars.getText().toString().equals("") || mDate.getText().toString().equals("") || mNotes.getText().toString().equals("")){
+					Builder alert = new AlertDialog.Builder(EditExpenseActivity.this);
+                	alert.setTitle("Incomplete Information");
+                	alert.setMessage("Please enter all the details!");
+                	alert.setPositiveButton("OK",null);
+                	alert.show(); 
+				}else{
+				
+					System.out.println("Inserting expense data.....");
+					if(imagePath.equals("")){
+						imagePath = "No Receipt";
+						 System.out.println(imagePath);
+					}
+					db.addExpense(new Expense(mAmountInDollars.getText().toString(),
+												mDate.getText().toString(),
+												mNotes.getText().toString(), 
+												mAccountType.getSelectedItem().toString(),
+												mCategoryType.getSelectedItem().toString(),
+												mPaymentMethod.getSelectedItem().toString(),
+												imagePath ));
+					Intent i = new Intent(EditExpenseActivity.this, AllExpensesActivity.class);
+					startActivity(i);	
+				}	
 			}
 		});
 		
@@ -288,6 +321,60 @@ public class EditExpenseActivity extends Activity {
 	        }
     }
 
+//	public boolean validate(final String date){
+//
+//		matcher1= pattern.matcher(date);
+//	     matcher = matcher1;
+//
+//	     if(matcher.matches()){
+//	         matcher.reset();
+//
+//	         if(matcher.find()){
+//	             String day = matcher.group(1);
+//	             String month = matcher.group(2);
+//	             int year = Integer.parseInt(matcher.group(3));
+//
+//	             if (day.equals("31") && 
+//	              (month.equals("4") || month .equals("6") || month.equals("9") ||
+//	                      month.equals("11") || month.equals("04") || month .equals("06") ||
+//	                      month.equals("09"))) {
+//	                return false; // only 1,3,5,7,8,10,12 has 31 days
+//	             } 
+//
+//	             else if (month.equals("2") || month.equals("02")) {
+//	                  //leap year
+//	                 if(year % 4==0){
+//	                      if(day.equals("30") || day.equals("31")){
+//	                          return false;
+//	                      }
+//	                      else{
+//	                          return true;
+//	                      }
+//	                 }
+//	                 else{
+//	                     if(day.equals("29")||day.equals("30")||day.equals("31")){
+//	                         return false;
+//	                     }
+//	                     else{
+//	                         return true;
+//	                     }
+//	                 }
+//	             }
+//
+//	             else{               
+//	                 return true;                
+//	             }
+//	         }
+//
+//	         else{
+//	              return false;
+//	         }        
+//	     }
+//	     else{
+//	         return false;
+//	     }              
+//	   }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -305,6 +392,8 @@ public class EditExpenseActivity extends Activity {
 		case R.id.action_export_app_data:
 			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 			task.execute("");
+			ExportDatabaseDBTask dbTask = new ExportDatabaseDBTask(this);
+			dbTask.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(EditExpenseActivity.this, MyExpenseManagerMainActivity.class);

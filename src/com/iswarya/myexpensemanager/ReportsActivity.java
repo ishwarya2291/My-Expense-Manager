@@ -1,14 +1,20 @@
 package com.iswarya.myexpensemanager;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class ReportsActivity extends Activity{
 
 	SessionManager session;
+	private static Button mReportAccountButton, mReportCategoryButton, mReportPaymentMethodButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +23,67 @@ public class ReportsActivity extends Activity{
 		// Session Manager
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
+        
+        mReportAccountButton = (Button) findViewById(R.id.reports_account);
+        mReportCategoryButton = (Button) findViewById(R.id.reports_category);
+        mReportPaymentMethodButton = (Button) findViewById(R.id.reports_payment_method);
+        
+        FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		AccountFragment pieChartFragment = new AccountFragment();
+		ft.add(R.id.pie_chart_fragment, pieChartFragment);
+		ft.commit();
+		
+		mReportAccountButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				accountFragment();
+			}
+		});
+		
+		mReportCategoryButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				categoryFragment();
+			}
+		});
+		
+		mReportPaymentMethodButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				paymentMethodFragment();
+			}
+		});
 		
 	}
-
+	
+	public void accountFragment(){
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		AccountFragment accFragment = new AccountFragment();
+		ft.replace(R.id.pie_chart_fragment, accFragment);
+		ft.commit();
+	}
+	
+	public void categoryFragment(){
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		CategoryFragment catFragment = new CategoryFragment();
+		ft.replace(R.id.pie_chart_fragment, catFragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+	
+	public void paymentMethodFragment(){
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		PaymentMethodFragment payFragment = new PaymentMethodFragment();
+		ft.replace(R.id.pie_chart_fragment, payFragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,6 +102,8 @@ public class ReportsActivity extends Activity{
 		case R.id.action_export_app_data:
 			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 			task.execute("");
+			ExportDatabaseDBTask dbTask = new ExportDatabaseDBTask(this);
+			dbTask.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(ReportsActivity.this, MyExpenseManagerMainActivity.class);
@@ -55,5 +121,4 @@ public class ReportsActivity extends Activity{
 			
 		}
 	}
-
 }

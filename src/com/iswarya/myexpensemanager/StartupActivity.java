@@ -65,6 +65,8 @@ public class StartupActivity extends Activity {
 		case R.id.action_export_app_data:
 			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 			task.execute("");
+			ExportDatabaseDBTask dbTask = new ExportDatabaseDBTask(this);
+			dbTask.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(StartupActivity.this, MyExpenseManagerMainActivity.class);

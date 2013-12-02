@@ -41,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     	String CREATE_EXPENSES_TABLE = "CREATE TABLE " + TABLE_EXPENSE_DETAILS + "(" 
     			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_AMOUNT + " TEXT,"
-    			+ KEY_DATE + " TEXT," + KEY_NOTE + " TEXT,"
+    			+ KEY_DATE + " DATE," + KEY_NOTE + " TEXT,"
     			+ KEY_ACCOUNT_TYPE + " TEXT," + KEY_CATEGORY + " TEXT,"
     			+ KEY_PAYMENT_TYPE + " TEXT," + KEY_RECEIPT + " TEXT" +")";
     	db.execSQL(CREATE_EXPENSES_TABLE);
@@ -61,8 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
-    
-    
+
     // Adding new expense  -- Inserting new record
     public void addExpense(Expense expense){
     	SQLiteDatabase db = this.getWritableDatabase();			// this keyword is a reference to SQLiteOpenHelper
@@ -181,12 +180,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EXPENSE_DETAILS, KEY_ID + " = ?",
                 new String[] { String.valueOf(expense.getId()) });
-        db.close();
-    	
+        db.close();	
     }
-    
-    
-
 }
 
 

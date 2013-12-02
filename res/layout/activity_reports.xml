@@ -10,18 +10,28 @@
     android:orientation="vertical" >
     
 	<Button
+	    android:id="@+id/reports_account"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:text="@string/reports_by_account" />
 
 	<Button
+	    android:id="@+id/reports_category"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:text="@string/reports_by_category" />
 	
 	<Button
+	    android:id="@+id/reports_payment_method"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:text="@string/reports_by_payment_method" />
+	
+	<LinearLayout
+        android:id="@+id/pie_chart_fragment"
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:orientation="horizontal" >    	
+    </LinearLayout>
 
 </LinearLayout>

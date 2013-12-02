@@ -21,7 +21,7 @@
     <string name="gallery_image">Gallery</string>
     <string name="take_photo_image">Take Photo</string>
     <string name="title_activity_all_expenses">All Expenses</string>
-    <string name="current_month">October</string>
+    <string name="current_month">Total Amount Spent</string>
     <string name="total_amount_month">300.00</string>
     <string name="item_shopping">Shopping</string>
     <string name="item_date">10/3/2013</string>

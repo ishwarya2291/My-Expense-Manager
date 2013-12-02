@@ -3,6 +3,9 @@ package com.iswarya.myexpensemanager;
 import java.io.File;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -83,11 +86,20 @@ public class ShowExpenseActivity extends Activity {
    
         mDeleteButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
-				db.deleteExpense(expense);
-				Intent i = new Intent(ShowExpenseActivity.this, AllExpensesActivity.class);
-				startActivity(i);
+				Builder alert = new AlertDialog.Builder(ShowExpenseActivity.this);
+            	alert.setMessage("Do you really want to delete this expense?");
+            	alert.setPositiveButton("Yes",new DialogInterface.OnClickListener() {		
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						db.deleteExpense(expense);
+						Intent i = new Intent(ShowExpenseActivity.this, AllExpensesActivity.class);
+						startActivity(i);						
+					}
+				});            	
+            	alert.setNegativeButton("No", null);
+            	alert.show(); 
+	
 			}
 		});
            
@@ -115,6 +127,8 @@ public class ShowExpenseActivity extends Activity {
 		case R.id.action_export_app_data:
 			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 			task.execute("");
+			ExportDatabaseDBTask dbTask = new ExportDatabaseDBTask(this);
+			dbTask.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(ShowExpenseActivity.this, MyExpenseManagerMainActivity.class);

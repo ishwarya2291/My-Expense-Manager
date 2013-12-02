@@ -1,7 +1,10 @@
 package com.iswarya.myexpensemanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +27,7 @@ public class AllExpensesActivity extends Activity {
 	private ShakeEventListener mSensorListener;
 	private TextView mTotalMonthAmount;
 	DatabaseHandler db;
+	Expense expense;
 	
 	
 	@Override
@@ -34,6 +39,7 @@ public class AllExpensesActivity extends Activity {
         session.checkLogin();
         
         db = new DatabaseHandler(this);
+        expense = new Expense();
         
         mTotalMonthAmount = (TextView) findViewById(R.id.total_amount_month);
         
@@ -68,7 +74,6 @@ public class AllExpensesActivity extends Activity {
         	
         	@Override
         	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3){
-          			Expense expense = new Expense();
         			expense = (Expense) arg0.getAdapter().getItem(arg2);
         			int id= expense.getId();
         			Intent showExpenseIntent = new Intent(AllExpensesActivity.this, ShowExpenseActivity.class);
@@ -76,6 +81,32 @@ public class AllExpensesActivity extends Activity {
         			startActivity(showExpenseIntent);
         	}
         	
+		});
+        
+        mList.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				expense = (Expense) arg0.getAdapter().getItem(arg2);
+				int id= expense.getId();
+				expense = db.getExpense(id);
+				Builder alert = new AlertDialog.Builder(AllExpensesActivity.this);
+				alert.setTitle("Delete expense");
+            	alert.setMessage("Do you really want to delete this expense?");
+            	alert.setPositiveButton("Yes",new DialogInterface.OnClickListener() {		
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						db.deleteExpense(expense);		
+						finish();
+			            startActivity(getIntent());
+					}
+				});            	
+            	alert.setNegativeButton("No", null);
+            	alert.show(); 
+				
+				return true;
+			}
 		});
         
 	}
@@ -120,6 +151,8 @@ public class AllExpensesActivity extends Activity {
 		case R.id.action_export_app_data:
 			ExportDatabaseCSVTask task = new ExportDatabaseCSVTask(this);
 			task.execute("");
+			ExportDatabaseDBTask dbTask = new ExportDatabaseDBTask(this);
+			dbTask.execute("");
 			return true;
 		case R.id.action_logout:
 			Intent mainIntent = new Intent(AllExpensesActivity.this, MyExpenseManagerMainActivity.class);
