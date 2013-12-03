@@ -42,6 +42,8 @@ public class EditExpenseActivity extends Activity {
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	private Uri fileUri;
 	DatabaseHandler db;
+	private Uri selectedImage;
+	private Bitmap selectedPicture = null, bitmap = null;
 	private Pattern pattern;
 	private Matcher matcher, matcher1;
 	private static final String DATE_PATTERN = 
@@ -56,6 +58,13 @@ public class EditExpenseActivity extends Activity {
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         db = new DatabaseHandler(this);
+        
+        if (savedInstanceState != null)
+        {
+            imagePath= savedInstanceState.getString("imagePath");
+            fileUri = savedInstanceState.getParcelable("fileURI");    
+        }
+        
 		
 		mSaveButton = (Button) findViewById(R.id.save_button);
 		mCancelButton = (Button) findViewById(R.id.cancel_button);
@@ -69,23 +78,7 @@ public class EditExpenseActivity extends Activity {
 		mAccountType = (Spinner) findViewById(R.id.account_type_spinner);
 		mCategoryType = (Spinner) findViewById(R.id.category_type_spinner);
 		mPaymentMethod = (Spinner) findViewById(R.id.payment_method_spinner);
-		
-//		mDate.setOnFocusChangeListener(new OnFocusChangeListener() {
-//			
-//			@Override
-//			public void onFocusChange(View v, boolean hasFocus) {
-//				// TODO Auto-generated method stub
-//				if(!hasFocus){
-//					matcher = Pattern.compile(DATE_PATTERN).matcher(mDate.getText().toString());
-//					validate(mDate.getText().toString());
-//					
-//				}
-//				
-//			}
-//		});
-				
-		
-		
+			
 		Intent intent = getIntent();
 		System.out.println(intent.getIntExtra("mId", 0)+ " Intent Value");
 		if(intent.getIntExtra("mId", 0)>0){
@@ -96,6 +89,7 @@ public class EditExpenseActivity extends Activity {
 	        mAmountInDollars.setText(expense.getAmount());
 	        mDate.setText(expense.getDate());
 	        mNotes.setText(expense.getNote());
+	        imagePath = expense.getReceipt();
 	        
 	        if(expense.getAccountType().equals("Business")){
 	        	mAccountType.setSelection(0);
@@ -190,15 +184,27 @@ public class EditExpenseActivity extends Activity {
 			}
 		});
 		
-		mReceiptImage.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent imageIntent = new Intent(EditExpenseActivity.this,ImageActivity.class);
-				imageIntent.putExtra("imgPath", imagePath);
-	            startActivity(imageIntent);				
+		if(!imagePath.equals("")){
+			if(!imagePath.equals("No Receipt")){
+				File imgFile = new  File(imagePath);
+	            if(imgFile.exists())
+	            {
+	            	mReceiptImage.setImageURI(Uri.fromFile(imgFile));
+
+	            }
+	            mReceiptImage.setOnClickListener(new OnClickListener() {
+	    			
+	    			@Override
+	    			public void onClick(View v) {
+	    				Intent imageIntent = new Intent(EditExpenseActivity.this,ImageActivity.class);
+						imageIntent.putExtra("imgPath", imagePath);
+			            startActivity(imageIntent);	
+	    				
+	    			}
+	    		});
 			}
-		});
+
+        }
 		
 		mSaveButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -266,7 +272,6 @@ public class EditExpenseActivity extends Activity {
 				Toast.makeText(this, "Image saved to:\n" + fileUri.getPath(),
 						Toast.LENGTH_LONG).show();
 						
-				Bitmap bitmap = null;
 				bitmap = BitmapFactory.decodeFile(fileUri.getPath());
 
 				mReceiptImage.setImageBitmap(bitmap);
@@ -280,7 +285,7 @@ public class EditExpenseActivity extends Activity {
 		}else{
 			if(resultCode == RESULT_OK)
 	        {  
-	            Uri selectedImage = data.getData();
+	            selectedImage = data.getData();
 	            InputStream imageStream = null;
 	            try 
 	            {
@@ -293,8 +298,7 @@ public class EditExpenseActivity extends Activity {
 
 	            BitmapFactory.Options options = new BitmapFactory.Options();
 	            options.inSampleSize =8;
-
-	            Bitmap selectedPicture = null;
+	            
 	            selectedPicture = BitmapFactory.decodeStream(imageStream,null,options);
 	            mReceiptImage.setImageBitmap(selectedPicture);
 	            imagePath = getRealPathFromURI(selectedImage);
@@ -321,59 +325,12 @@ public class EditExpenseActivity extends Activity {
 	        }
     }
 
-//	public boolean validate(final String date){
-//
-//		matcher1= pattern.matcher(date);
-//	     matcher = matcher1;
-//
-//	     if(matcher.matches()){
-//	         matcher.reset();
-//
-//	         if(matcher.find()){
-//	             String day = matcher.group(1);
-//	             String month = matcher.group(2);
-//	             int year = Integer.parseInt(matcher.group(3));
-//
-//	             if (day.equals("31") && 
-//	              (month.equals("4") || month .equals("6") || month.equals("9") ||
-//	                      month.equals("11") || month.equals("04") || month .equals("06") ||
-//	                      month.equals("09"))) {
-//	                return false; // only 1,3,5,7,8,10,12 has 31 days
-//	             } 
-//
-//	             else if (month.equals("2") || month.equals("02")) {
-//	                  //leap year
-//	                 if(year % 4==0){
-//	                      if(day.equals("30") || day.equals("31")){
-//	                          return false;
-//	                      }
-//	                      else{
-//	                          return true;
-//	                      }
-//	                 }
-//	                 else{
-//	                     if(day.equals("29")||day.equals("30")||day.equals("31")){
-//	                         return false;
-//	                     }
-//	                     else{
-//	                         return true;
-//	                     }
-//	                 }
-//	             }
-//
-//	             else{               
-//	                 return true;                
-//	             }
-//	         }
-//
-//	         else{
-//	              return false;
-//	         }        
-//	     }
-//	     else{
-//	         return false;
-//	     }              
-//	   }
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	  super.onSaveInstanceState(savedInstanceState);
+	  savedInstanceState.putString("imagePath", imagePath);
+	  savedInstanceState.putParcelable("fileURI", fileUri);
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

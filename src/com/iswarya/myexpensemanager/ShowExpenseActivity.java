@@ -62,7 +62,6 @@ public class ShowExpenseActivity extends Activity {
         mPaymentMethod.setText(expense.getPaymentType());        
         
         imgPath = expense.getReceipt();
-        System.out.println("Image Path is "+imgPath);
         if(!imgPath.equals("No Receipt")){
         	File imgFile = new  File(imgPath);
             if(imgFile.exists())

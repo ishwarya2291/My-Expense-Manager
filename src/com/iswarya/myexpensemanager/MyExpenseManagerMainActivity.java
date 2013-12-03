@@ -7,8 +7,9 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,7 +31,7 @@ public class MyExpenseManagerMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_expense_manager_main);
-		setupUI(findViewById(R.id.parent));
+	//	setupUI(findViewById(R.id.parent));
 		
 		// Session Manager
         session = new SessionManager(getApplicationContext());
@@ -40,47 +41,47 @@ public class MyExpenseManagerMainActivity extends Activity {
 		mContinueButton = (Button) findViewById(R.id.continue_button_text);
 		
 		
-//		mFullName.addTextChangedListener(new TextWatcher() {
-//
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before,
-//					int count) {
-//				// TODO Auto-generated method stub
-//			}
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//				// TODO Auto-generated method stub
-//			}
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//				// TODO Auto-generated method stub
-//				Is_Valid_Person_Name(mFullName); // pass your EditText Obj here.
-//			}
-//		});
-//		
-//		mEmailAddress.addTextChangedListener(new TextWatcher() {
-//
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before,
-//					int count) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//				// TODO Auto-generated method stub
-//				Is_Valid_Email(mEmailAddress);  // pass your EditText Obj here.
-//			}
-//		});
+		mFullName.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				Is_Valid_Person_Name(mFullName); // pass your EditText Obj here.
+			}
+		});
+		
+		mEmailAddress.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				Is_Valid_Email(mEmailAddress);  // pass your EditText Obj here.
+			}
+		});
 		
 
 		
